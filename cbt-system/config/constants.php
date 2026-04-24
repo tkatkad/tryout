@@ -21,6 +21,18 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.cookie_secure', 0); // Set to 1 jika menggunakan HTTPS
 ini_set('session.gc_maxlifetime', 7200); // 2 jam
 
+// Security: Set session cookie parameters BEFORE session_start()
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 7200,
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'] ?? 'localhost',
+        'secure' => false, // Set true untuk HTTPS
+        'httponly' => true,
+        'samesite' => 'Strict'
+    ]);
+}
+
 // Upload Configuration
 define('UPLOAD_DIR', ROOT_PATH . '/uploads/');
 define('MAX_UPLOAD_SIZE', 5 * 1024 * 1024); // 5MB
