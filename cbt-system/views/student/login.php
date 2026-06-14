@@ -44,7 +44,17 @@
                 </div>
             <?php endif; ?>
             
+            <?php if (isset($_GET['blocked'])): ?>
+                <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800">
+                    <p class="font-semibold">⚠️ Akun Diblokir Sementara</p>
+                    <p class="text-sm"><?= htmlspecialchars($_GET['blocked']) ?></p>
+                </div>
+            <?php endif; ?>
+            
             <form action="<?= BASE_URL ?>/auth/login_process.php" method="POST" id="loginForm">
+                
+                <!-- CSRF Token (WAJIB untuk keamanan) -->
+                <input type="hidden" name="csrf_token" value="<?= Auth::generateCsrfToken() ?>">
                 
                 <!-- Username -->
                 <div class="mb-6">
